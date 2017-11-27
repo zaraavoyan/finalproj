@@ -1,0 +1,74 @@
+
+
+#include <Elegoo_GFX.h>    
+#include <Elegoo_TFTLCD.h> 
+#include <TouchScreen.h>
+
+#if defined(__SAM3X8E__)
+    #undef __FlashStringHelper::F(string_literal)
+    #define F(string_literal) string_literal
+#endif
+#define YP A3  
+#define XM A2  
+#define YM 9   
+#define XP 8  
+
+#define TS_MINX 120
+#define TS_MAXX 900
+
+#define TS_MINY 70
+#define TS_MAXY 920
+
+TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
+
+#define LCD_CS A3
+#define LCD_CD A2
+#define LCD_WR A1
+#define LCD_RD A0
+
+#define LCD_RESET A4
+#define  BLACK   0x0000
+#define  PURPLE  0xD1FA
+#define  PINK    0xFE5B
+#define  TEAL    0x142E
+#define WHITE   0xFFFF
+
+
+Elegoo_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
+
+
+void setup(void) {
+  Serial.begin(9600);
+  
+  tft.reset();
+  
+  uint16_t identifier = tft.readID();
+  
+  {     
+      identifier=0x9341;
+
+  }
+
+  tft.begin(identifier);
+  tft.fillScreen(BLACK);
+  tft.setCursor(55,100);
+  tft.setTextSize(3);
+  tft.setTextColor(MAGENTA);
+  tft.print("Welcome!");
+  tft.setTextSize(2);
+  tft.setCursor(45,130);
+  tft.print("Tap to start!");
+  
+// if (touchscreen) here;
+
+
+
+}
+
+
+#define MINPRESSURE 10
+#define MAXPRESSURE 1000
+
+void loop()
+{
+}
